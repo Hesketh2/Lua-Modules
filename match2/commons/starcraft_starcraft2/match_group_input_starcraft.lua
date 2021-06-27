@@ -186,7 +186,9 @@ function StarCraftMatchGroupInput.getExtraData(match)
 		subGroup9header = StarCraftMatchGroupInput.getSubGroupHeader(9, match),
 		headtohead = match.headtohead,
 		ffa = match.ffa == 'true' and 'true' or 'false',
-		noscore = match.noscore
+		noscore = match.noscore,
+		advancecount = match.advancecount,
+		showplacement = match.showplacement,
 	})
 	return match
 end
