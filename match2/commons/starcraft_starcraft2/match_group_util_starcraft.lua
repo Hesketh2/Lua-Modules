@@ -110,6 +110,7 @@ function StarcraftMatchGroupUtil.populateOpponents(match)
 	local opponents = match.opponents
 
 	for _, opponent in ipairs(opponents) do
+		opponent.advances = Logic.readBoolOrNil(Table.extract(opponent.extradata, 'advances'))
 		opponent.isArchon = Logic.readBool(Table.extract(opponent.extradata, 'isarchon'))
 		opponent.placement2 = tonumber(Table.extract(opponent.extradata, 'placement2'))
 		opponent.score2 = tonumber(Table.extract(opponent.extradata, 'score2'))
