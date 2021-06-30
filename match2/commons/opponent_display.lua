@@ -1,6 +1,7 @@
 local Class = require('Module:Class')
 local DisplayHelper = require('Module:MatchGroup/Display/Helper')
 local DisplayUtil = require('Module:DisplayUtil')
+local Logic = require('Module:Logic')
 local MatchGroupUtil = require('Module:MatchGroup/Util')
 local PlayerDisplay = require('Module:Player/Display')
 local Table = require('Module:Table')
@@ -225,7 +226,7 @@ function OpponentDisplay.InlineTeam(props)
 		template = 'default',
 	}))
 		:gsub('DefaultPage', props.team.pageName)
-		:gsub('DefaultName', props.team.displayName)
+		:gsub('DefaultName', Logic.emptyOr(props.team.displayName, '&nbsp;'))
 		:gsub('DefaultShort', props.team.shortName)
 		:gsub('DefaultBracket', props.team.bracketName)
 end
@@ -308,7 +309,7 @@ function OpponentDisplay.BlockLiteral(props)
 	return DisplayUtil.applyOverflowStyles(mw.html.create('div'), props.overflow or 'wrap')
 		:addClass('brkts-opponent-block-literal')
 		:addClass(props.flip and 'flipped' or nil)
-		:node(props.name)
+		:node(Logic.emptyOr(props.name, '&nbsp;'))
 end
 
 --[[
