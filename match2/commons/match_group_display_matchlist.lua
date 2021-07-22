@@ -87,11 +87,13 @@ function MatchlistDisplay.Matchlist(props)
 		matchHasDetails = propsConfig.matchHasDetails or DisplayHelper.defaultMatchHasDetails,
 		width = propsConfig.width or 300,
 	}
+
 	local tableNode = html.create('table')
 		:addClass('brkts-matchlist wikitable wikitable-bordered matchlist')
 		:addClass(config.collapsible and 'collapsible' or nil)
 		:addClass(config.collapsed and 'collapsed' or nil)
-		:cssText(config.attached and 'margin-bottom:-1px;margin-top:-2px' or nil)
+		:addClass(config.attached and 'brkts-matchlist-attached' or nil)
+		:css('margin-top', config.attached and '-1px' or nil)
 		:css('width', config.width .. 'px')
 
 	for index, match in ipairs(props.matches) do
@@ -124,9 +126,7 @@ function MatchlistDisplay.Matchlist(props)
 			:node(matchNode)
 	end
 
-	return html.create('div'):addClass('brkts-main brkts-main-dev-2')
-		:cssText(config.attached and 'padding-left:0px; padding-right:0px' or nil)
-		:node(tableNode)
+	return tableNode
 end
 
 MatchlistDisplay.propTypes.Match = {
@@ -183,16 +183,11 @@ function MatchlistDisplay.Match(props)
 			matchId = props.match.matchId,
 		})
 
-		matchSummaryPopupNode = html.create('div')
-			:addClass('brkts-match-info-popup')
-			:css('max-height', '80vh')
-			:css('overflow', 'auto')
-			:css('display', 'none')
+		matchSummaryPopupNode = html.create('div'):addClass('brkts-match-info-popup')
 			:node(matchSummaryNode)
 	end
 
-	local matchInfo = html.create('td')
-		:addClass('brkts-match-info brkts-empty-td')
+	local matchInfo = html.create('td'):addClass('brkts-empty-td')
 		:node(
 			matchSummaryPopupNode
 				and html.create('div'):addClass('brkts-match-info-icon')
@@ -201,8 +196,7 @@ function MatchlistDisplay.Match(props)
 		:node(matchSummaryPopupNode)
 
 	return html.create('tr')
-		:addClass('brtks-matchlist-row brkts-match-popup-wrapper')
-		:css('cursor', 'pointer')
+		:addClass('brkts-matchlist-row brtks-matchlist-row brkts-match-popup-wrapper')
 		:node(renderOpponent(1))
 		:node(renderScore(1))
 		:node(matchInfo)
@@ -247,8 +241,6 @@ function MatchlistDisplay.Header(props)
 	local thNode = html.create('th')
 		:addClass('brkts-matchlist-header')
 		:attr('colspan', '5')
-		:css('line-height', 'unset')
-		:css('padding', '1px 5px')
 		:node(DisplayUtil.applyOverflowStyles(headerNode, 'wrap'))
 	return html.create('tr'):node(thNode)
 end
